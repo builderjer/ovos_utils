@@ -1,4 +1,3 @@
-phoneme_guesser
 mycroft-messagebus-client
 colour
 inflection
