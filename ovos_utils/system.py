@@ -56,6 +56,15 @@ def ntp_sync():
     subprocess.call('ntpd -gq', shell=True)
     subprocess.call('service ntp start', shell=True)
 
+def timesync_sync(sudo=True):
+    # System is using systemd-timesyncd instead of ntp
+    cmd1 = "systemctl stop systemd-timesyncd"
+    cmd2 = "systemctl start systemd-timesyncd"
+    if sudo:
+        cmd1 = f'sudo {cmd1}'
+        cmd2 = f'sudo {cmd2}'
+    subprocess.call(cmd1, shell=True)
+    subprocess.call(cmd2, shell=True)
 
 def system_shutdown(sudo=True):
     """
@@ -177,6 +186,25 @@ def check_service_active(service_name, sudo=False, user=False) -> bool:
     state = subprocess.run(status_command, shell=True).returncode
     return state == 0
 
+def check_service_installed(service_name, sudo=False, user=False) -> bool:
+    """
+    Checks if a systemd service is installed using systemctl
+    @param service_name: name of service to check
+    @param user: pass --user flag when calling systemctl
+    @param sudo: use sudo when calling systemctl
+    @return: True if the service is installed, else False
+    """
+    if not service_name.endswith('.service'):
+        service_name = f"{service_name}.service"
+    installed_base_command = f"systemctl list-unit-files -t service"
+    if user:
+        status_command = f"{installed_base_command} --user"
+    elif sudo:
+        status_command = f"sudo {installed_base_command}"
+    # Add a grep to the command
+    status_command = f"{status_command} | grep -i {service_name}"
+    state = subprocess.call(status_command, shell=True)
+    return state == 0
 
 # platform fingerprinting
 def set_root_path(path):
@@ -306,9 +334,9 @@ def has_screen():
             have_display = b"device_name=" in subprocess.check_output("tvservice -n 2>&1", shell=True)
         except Exception as e:
             pass
-        
+
     # fallback check using matplotlib if available
-    # seems to be foolproof and OS agnostic 
+    # seems to be foolproof and OS agnostic
     # but do not want to drag the dependency
     if not have_display:
         try:
