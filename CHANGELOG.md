@@ -1,5 +1,9 @@
 # Changelog
 
+## [V0.0.37a1](https://github.com/builderjer/ovos_utils/tree/V0.0.37a1) (2023-10-30)
+
+[Full Changelog](https://github.com/builderjer/ovos_utils/compare/V0.0.25a12...V0.0.37a1)
+
 ## [V0.0.25a12](https://github.com/builderjer/ovos_utils/tree/V0.0.25a12) (2022-10-16)
 
 [Full Changelog](https://github.com/builderjer/ovos_utils/compare/0.0.12...V0.0.25a12)
