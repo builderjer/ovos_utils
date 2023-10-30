@@ -51,13 +51,18 @@ def is_running_from_module(module_name):
 
 # system utils
 def ntp_sync():
-    # Force the system clock to synchronize with internet time servers
+    """
+    Force the system clock to synchronize with internet time servers
+    """
     subprocess.call('service ntp stop', shell=True)
     subprocess.call('ntpd -gq', shell=True)
     subprocess.call('service ntp start', shell=True)
 
 def timesync_sync(sudo=True):
-    # System is using systemd-timesyncd instead of ntp
+    """
+    System is using systemd-timesyncd instead of ntp
+    @param sudo: use sudo when calling systemctl
+    """
     cmd1 = "systemctl stop systemd-timesyncd"
     cmd2 = "systemctl start systemd-timesyncd"
     if sudo:
