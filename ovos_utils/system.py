@@ -8,8 +8,8 @@ import sysconfig
 from enum import Enum
 from os.path import expanduser, exists, join
 
-from ovos_utils.log import LOG
-
+from ovos_utils.log import LOG, deprecated
+from ovos_bus_client.message import Message
 
 # TODO: Deprecate MycroftRootLocations in 0.1.0
 class MycroftRootLocations(str, Enum):
@@ -24,6 +24,72 @@ class MycroftRootLocations(str, Enum):
 
 _USER_DEFINED_ROOT = None
 
+# system utils
+@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
+def ntp_sync():
+    # """
+    # Force the system clock to synchronize with internet time servers
+    # """
+    # subprocess.call('service ntp stop', shell=True)
+    # subprocess.call('ntpd -gq', shell=True)
+    # subprocess.call('service ntp start', shell=True)
+    self.bus.emit(Message("system.ntp.sync"))
+
+@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
+def system_shutdown(sudo=True):
+    # """
+    # Turn the system completely off (with no option to inhibit it)
+    # @param sudo: use sudo when calling systemctl
+    # """
+    # cmd = 'systemctl poweroff -i'
+    # if sudo:
+    #     cmd = f'sudo {cmd}'
+    # LOG.debug(cmd)
+    # subprocess.call(cmd, shell=True)
+    self.bus.emit(Message("system.shutdown"))
+
+@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
+def system_reboot(sudo=True):
+    # """
+    # Shut down and restart the system
+    # @param sudo: use sudo when calling systemctl
+    # """
+    # cmd = 'systemctl reboot -i'
+    # if sudo:
+    #     cmd = f'sudo {cmd}'
+    # LOG.debug(cmd)
+    # subprocess.call(cmd, shell=True)
+    self.bus.emit(Message("system.reboot"))
+
+@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
+def ssh_enable(sudo=True, user=False):
+    # """
+    # Permanently allow SSH access
+    # @param sudo: use sudo when calling systemctl
+    # @param user: pass --user flag when calling systemctl
+    # """
+    # enable_service("ssh.service", sudo=sudo, user=user)
+    self.bus.emit(Message("system.ssh.enable"))
+
+@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
+def ssh_disable(sudo=True, user=False):
+    # """
+    # Permanently block SSH access from the outside
+    # @param sudo: use sudo when calling systemctl
+    # @param user: pass --user flag when calling systemctl
+    # """
+    # disable_service("ssh.service", sudo=sudo, user=user)
+    self.bus.emit(Message("system.ssh.disable"))
+
+@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
+def restart_mycroft_service(sudo=True, user=False):
+    """
+    Restarts the `mycroft.service` systemd service
+    @param sudo: use sudo when calling systemctl
+    @param user: pass --user flag when calling systemctl
+    """
+    # restart_service("mycroft.service", sudo=sudo, user=user)
+    self.bus.emit(Message("system.mycroft.service.restart"))
 
 def is_running_from_module(module_name):
     # Stack:
@@ -47,80 +113,6 @@ def is_running_from_module(module_name):
                 name.startswith(module_name.replace("-", "_").replace(" ", "_")):
             return True
     return False
-
-
-# system utils
-def ntp_sync():
-    """
-    Force the system clock to synchronize with internet time servers
-    """
-    subprocess.call('service ntp stop', shell=True)
-    subprocess.call('ntpd -gq', shell=True)
-    subprocess.call('service ntp start', shell=True)
-
-def timesync_sync(sudo=True):
-    """
-    System is using systemd-timesyncd instead of ntp
-    @param sudo: use sudo when calling systemctl
-    """
-    cmd1 = "systemctl stop systemd-timesyncd"
-    cmd2 = "systemctl start systemd-timesyncd"
-    if sudo:
-        cmd1 = f'sudo {cmd1}'
-        cmd2 = f'sudo {cmd2}'
-    subprocess.call(cmd1, shell=True)
-    subprocess.call(cmd2, shell=True)
-
-def system_shutdown(sudo=True):
-    """
-    Turn the system completely off (with no option to inhibit it)
-    @param sudo: use sudo when calling systemctl
-    """
-    cmd = 'systemctl poweroff -i'
-    if sudo:
-        cmd = f'sudo {cmd}'
-    LOG.debug(cmd)
-    subprocess.call(cmd, shell=True)
-
-
-def system_reboot(sudo=True):
-    """
-    Shut down and restart the system
-    @param sudo: use sudo when calling systemctl
-    """
-    cmd = 'systemctl reboot -i'
-    if sudo:
-        cmd = f'sudo {cmd}'
-    LOG.debug(cmd)
-    subprocess.call(cmd, shell=True)
-
-
-def ssh_enable(sudo=True, user=False):
-    """
-    Permanently allow SSH access
-    @param sudo: use sudo when calling systemctl
-    @param user: pass --user flag when calling systemctl
-    """
-    enable_service("ssh.service", sudo=sudo, user=user)
-
-
-def ssh_disable(sudo=True, user=False):
-    """
-    Permanently block SSH access from the outside
-    @param sudo: use sudo when calling systemctl
-    @param user: pass --user flag when calling systemctl
-    """
-    disable_service("ssh.service", sudo=sudo, user=user)
-
-
-def restart_mycroft_service(sudo=True, user=False):
-    """
-    Restarts the `mycroft.service` systemd service
-    @param sudo: use sudo when calling systemctl
-    @param user: pass --user flag when calling systemctl
-    """
-    restart_service("mycroft.service", sudo=sudo, user=user)
-
 
 def restart_service(service_name, sudo=True, user=False):
     """
@@ -354,7 +346,6 @@ def has_screen():
         except ImportError:
             pass
     return have_display
-
 
 def module_property(func):
     """
