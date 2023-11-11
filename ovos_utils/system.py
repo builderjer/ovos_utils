@@ -9,6 +9,7 @@ from enum import Enum
 from os.path import expanduser, exists, join
 
 from ovos_utils.log import LOG, deprecated
+from ovos_utils.messagbus import get_mycroft_bus
 from ovos_bus_client.message import Message
 
 # TODO: Deprecate MycroftRootLocations in 0.1.0
@@ -26,17 +27,18 @@ _USER_DEFINED_ROOT = None
 
 # system utils
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
-def ntp_sync():
+def ntp_sync(bus=None):
     # """
     # Force the system clock to synchronize with internet time servers
     # """
     # subprocess.call('service ntp stop', shell=True)
     # subprocess.call('ntpd -gq', shell=True)
     # subprocess.call('service ntp start', shell=True)
-    self.bus.emit(Message("system.ntp.sync"))
+    bus = bus or get_mycroft_bus()
+    bus.emit(Message("system.ntp.sync"))
 
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
-def system_shutdown(sudo=True):
+def system_shutdown(sudo=True, bus=None):
     # """
     # Turn the system completely off (with no option to inhibit it)
     # @param sudo: use sudo when calling systemctl
@@ -46,10 +48,11 @@ def system_shutdown(sudo=True):
     #     cmd = f'sudo {cmd}'
     # LOG.debug(cmd)
     # subprocess.call(cmd, shell=True)
-    self.bus.emit(Message("system.shutdown"))
+    bus = bus or get_mycroft_bus()
+    bus.emit(Message("system.shutdown"))
 
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
-def system_reboot(sudo=True):
+def system_reboot(sudo=True, bus=None):
     # """
     # Shut down and restart the system
     # @param sudo: use sudo when calling systemctl
@@ -59,37 +62,41 @@ def system_reboot(sudo=True):
     #     cmd = f'sudo {cmd}'
     # LOG.debug(cmd)
     # subprocess.call(cmd, shell=True)
-    self.bus.emit(Message("system.reboot"))
+    bus = bus or get_mycroft_bus()
+    bus.emit(Message("system.reboot"))
 
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
-def ssh_enable(sudo=True, user=False):
+def ssh_enable(sudo=True, user=False, bus=None):
     # """
     # Permanently allow SSH access
     # @param sudo: use sudo when calling systemctl
     # @param user: pass --user flag when calling systemctl
     # """
     # enable_service("ssh.service", sudo=sudo, user=user)
-    self.bus.emit(Message("system.ssh.enable"))
+    bus = bus or get_mycroft_bus()
+    bus.emit(Message("system.ssh.enable"))
 
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
-def ssh_disable(sudo=True, user=False):
+def ssh_disable(sudo=True, user=False, bus=None):
     # """
     # Permanently block SSH access from the outside
     # @param sudo: use sudo when calling systemctl
     # @param user: pass --user flag when calling systemctl
     # """
     # disable_service("ssh.service", sudo=sudo, user=user)
-    self.bus.emit(Message("system.ssh.disable"))
+    bus = bus or get_mycroft_bus()
+    bus.emit(Message("system.ssh.disable"))
 
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
-def restart_mycroft_service(sudo=True, user=False):
+def restart_mycroft_service(sudo=True, user=False, bus=None):
     """
     Restarts the `mycroft.service` systemd service
     @param sudo: use sudo when calling systemctl
     @param user: pass --user flag when calling systemctl
     """
     # restart_service("mycroft.service", sudo=sudo, user=user)
-    self.bus.emit(Message("system.mycroft.service.restart"))
+    bus = bus or get_mycroft_bus()
+    bus.emit(Message("system.mycroft.service.restart"))
 
 def is_running_from_module(module_name):
     # Stack:
