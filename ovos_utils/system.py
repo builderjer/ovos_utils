@@ -9,7 +9,7 @@ from enum import Enum
 from os.path import expanduser, exists, join
 
 from ovos_utils.log import LOG, deprecated
-from ovos_utils.messagbus import get_mycroft_bus
+from ovos_utils.messagebus import get_mycroft_bus
 from ovos_bus_client.message import Message
 
 # TODO: Deprecate MycroftRootLocations in 0.1.0
