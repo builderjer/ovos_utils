@@ -28,64 +28,54 @@ _USER_DEFINED_ROOT = None
 # system utils
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
 def ntp_sync(bus=None):
-    # """
-    # Force the system clock to synchronize with internet time servers
-    # """
-    # subprocess.call('service ntp stop', shell=True)
-    # subprocess.call('ntpd -gq', shell=True)
-    # subprocess.call('service ntp start', shell=True)
-    bus = bus or get_mycroft_bus()
-    bus.emit(Message("system.ntp.sync"))
+    """
+    Force the system clock to synchronize with internet time servers
+    """
+    subprocess.call('service ntp stop', shell=True)
+    subprocess.call('ntpd -gq', shell=True)
+    subprocess.call('service ntp start', shell=True)
 
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
 def system_shutdown(sudo=True, bus=None):
-    # """
-    # Turn the system completely off (with no option to inhibit it)
-    # @param sudo: use sudo when calling systemctl
-    # """
-    # cmd = 'systemctl poweroff -i'
-    # if sudo:
-    #     cmd = f'sudo {cmd}'
-    # LOG.debug(cmd)
-    # subprocess.call(cmd, shell=True)
-    bus = bus or get_mycroft_bus()
-    bus.emit(Message("system.shutdown"))
+    """
+    Turn the system completely off (with no option to inhibit it)
+    @param sudo: use sudo when calling systemctl
+    """
+    cmd = 'systemctl poweroff -i'
+    if sudo:
+        cmd = f'sudo {cmd}'
+    LOG.debug(cmd)
+    subprocess.call(cmd, shell=True)
 
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
 def system_reboot(sudo=True, bus=None):
-    # """
-    # Shut down and restart the system
-    # @param sudo: use sudo when calling systemctl
-    # """
-    # cmd = 'systemctl reboot -i'
-    # if sudo:
-    #     cmd = f'sudo {cmd}'
-    # LOG.debug(cmd)
-    # subprocess.call(cmd, shell=True)
-    bus = bus or get_mycroft_bus()
-    bus.emit(Message("system.reboot"))
+    """
+    Shut down and restart the system
+    @param sudo: use sudo when calling systemctl
+    """
+    cmd = 'systemctl reboot -i'
+    if sudo:
+        cmd = f'sudo {cmd}'
+    LOG.debug(cmd)
+    subprocess.call(cmd, shell=True)
 
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
 def ssh_enable(sudo=True, user=False, bus=None):
-    # """
-    # Permanently allow SSH access
-    # @param sudo: use sudo when calling systemctl
-    # @param user: pass --user flag when calling systemctl
-    # """
-    # enable_service("ssh.service", sudo=sudo, user=user)
-    bus = bus or get_mycroft_bus()
-    bus.emit(Message("system.ssh.enable"))
+    """
+    Permanently allow SSH access
+    @param sudo: use sudo when calling systemctl
+    @param user: pass --user flag when calling systemctl
+    """
+    enable_service("ssh.service", sudo=sudo, user=user)
 
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
 def ssh_disable(sudo=True, user=False, bus=None):
-    # """
-    # Permanently block SSH access from the outside
-    # @param sudo: use sudo when calling systemctl
-    # @param user: pass --user flag when calling systemctl
-    # """
-    # disable_service("ssh.service", sudo=sudo, user=user)
-    bus = bus or get_mycroft_bus()
-    bus.emit(Message("system.ssh.disable"))
+    """
+    Permanently block SSH access from the outside
+    @param sudo: use sudo when calling systemctl
+    @param user: pass --user flag when calling systemctl
+    """
+    disable_service("ssh.service", sudo=sudo, user=user)
 
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
 def restart_mycroft_service(sudo=True, user=False, bus=None):
@@ -94,9 +84,7 @@ def restart_mycroft_service(sudo=True, user=False, bus=None):
     @param sudo: use sudo when calling systemctl
     @param user: pass --user flag when calling systemctl
     """
-    # restart_service("mycroft.service", sudo=sudo, user=user)
-    bus = bus or get_mycroft_bus()
-    bus.emit(Message("system.mycroft.service.restart"))
+    restart_service("mycroft.service", sudo=sudo, user=user)
 
 def is_running_from_module(module_name):
     # Stack:
