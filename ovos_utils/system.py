@@ -4,26 +4,31 @@ import re
 import shutil
 import subprocess
 import sys
-import sysconfig
-from enum import Enum
-from os.path import expanduser, exists, join
 
 from ovos_utils.log import LOG, deprecated
-from ovos_utils.messagebus import get_mycroft_bus
-from ovos_bus_client.message import Message
 
-# TODO: Deprecate MycroftRootLocations in 0.1.0
-class MycroftRootLocations(str, Enum):
-    PICROFT = "/home/pi/mycroft-core"
-    BIGSCREEN = "/home/mycroft/mycroft-core"
-    OVOS = "/usr/lib/python3.9/site-packages"
-    OLD_MARK1 = "/opt/venvs/mycroft-core/lib/python3.4/site-packages"
-    MARK1 = "/opt/venvs/mycroft-core/lib/python3.7/site-packages"
-    MARK2 = "/opt/mycroft"
-    HOME = expanduser("~/mycroft-core")  # git clones
+def is_running_from_module(module_name):
+    # Stack:
+    # [0] - _log()
+    # [1] - debug(), info(), warning(), or error()
+    # [2] - caller
+    stack = inspect.stack()
 
-
-_USER_DEFINED_ROOT = None
+    # Record:
+    # [0] - frame object
+    # [1] - filename
+    # [2] - line number
+    # [3] - function
+    # ...
+    for record in stack[2:]:
+        mod = inspect.getmodule(record[0])
+        name = mod.__name__ if mod else ''
+        # module name in file path of caller
+        # or import name matches module name
+        if f"/{module_name}/" in record[1] or \
+                name.startswith(module_name.replace("-", "_").replace(" ", "_")):
+            return True
+    return False
 
 # system utils
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
@@ -198,51 +203,6 @@ def check_service_installed(service_name, sudo=False, user=False) -> bool:
     state = subprocess.call(status_command, shell=True)
     return state == 0
 
-# platform fingerprinting
-def set_root_path(path):
-    global _USER_DEFINED_ROOT
-    _USER_DEFINED_ROOT = path
-    LOG.info(f"mycroft root set to {path}")
-
-
-def find_root_from_sys_path():
-    """Find mycroft root folder from sys.path, eg. venv site-packages."""
-    for p in [path for path in sys.path if path != '']:
-        if exists(join(p, 'mycroft', 'configuration', 'mycroft.conf')):
-            return p
-    else:
-        return None
-
-
-def find_root_from_sitepackages():
-    """Find root from system or venv's sitepackages."""
-    site = sysconfig.get_paths()['platlib']
-    if exists(join(site, 'mycroft', 'configuration', 'mycroft.conf')):
-        return site
-    else:
-        return None
-
-
-def search_mycroft_core_location():
-    """Check python path (.venv), system packages and finally known mycroft
-    locations."""
-    # downstream wants to override the root location
-    if _USER_DEFINED_ROOT:
-        return _USER_DEFINED_ROOT
-    # if we are in a .venv that should take precedence over everything else
-    if find_root_from_sitepackages():
-        return find_root_from_sitepackages()
-    # if there is a system wide install that should take precedence over
-    # hardcoded locations
-    elif find_root_from_sys_path():
-        return find_root_from_sys_path()
-    # finally look at default locations
-    for p in MycroftRootLocations:
-        if os.path.isdir(p):
-            return p
-    return None
-
-
 def get_desktop_environment():
     # From http://stackoverflow.com/questions/2035657/what-is-my-current-desktop-environment
     # and http://ubuntuforums.org/showthread.php?t=652320
@@ -364,4 +324,3 @@ def module_property(func):
 
     module.__getattr__ = patched_getattr
     return func
-

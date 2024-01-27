@@ -3,19 +3,29 @@ import csv
 import os
 import re
 import tempfile
+from os import walk
+from os.path import dirname, splitext, join
 from threading import RLock
 from typing import Optional, List
-
-from os import walk
-from os.path import dirname
-from os.path import splitext, join
 
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 
 from ovos_utils.bracket_expansion import expand_options
 from ovos_utils.log import LOG, log_deprecation
-from ovos_utils.system import search_mycroft_core_location
+
+
+def to_alnum(skill_id: str) -> str:
+    """
+    Convert a skill id to only alphanumeric characters
+     Non-alphanumeric characters are converted to "_"
+
+    Args:
+        skill_id (str): identifier to be converted
+    Returns:
+        (str) String of letters
+    """
+    return ''.join(c if c.isalnum() else '_' for c in str(skill_id))
 
 
 def get_temp_path(*args) -> str:
@@ -244,7 +254,6 @@ def load_vocabulary(basedir: str, skill_id: str) -> dict:
     Returns:
         dict with intent_type as keys and list of list of lists as value.
     """
-    from ovos_utils.intents.intent_service_interface import to_alnum
 
     vocabs = {}
     for path, _, files in walk(basedir):

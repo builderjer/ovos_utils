@@ -2,12 +2,13 @@ import time
 from datetime import datetime, timedelta
 from inspect import signature
 from typing import Callable, Optional, Union
-from ovos_utils.intents.intent_service_interface import to_alnum
-from ovos_utils.log import LOG, log_deprecation, deprecated
-from ovos_utils.messagebus import FakeBus, FakeMessage as Message, dig_for_message
+
+from ovos_utils.fakebus import Message, FakeBus, dig_for_message
+from ovos_utils.file_utils import to_alnum
+from ovos_utils.log import LOG
 
 
-def unmunge_message(message: Message, skill_id: str) -> Message:
+def unmunge_message(message, skill_id: str):
     """
     Restore message keywords by removing the Letterified skill ID.
     Args:
@@ -16,7 +17,8 @@ def unmunge_message(message: Message, skill_id: str) -> Message:
     Returns:
         Message without clear keywords
     """
-    if isinstance(message, Message) and isinstance(message.data, dict):
+    if isinstance(message, Message) and \
+            isinstance(message.data, dict):
         skill_id = to_alnum(skill_id)
         for key in list(message.data.keys()):
             if key.startswith(skill_id):
@@ -45,10 +47,10 @@ def get_handler_name(handler: Callable) -> str:
 
 def create_wrapper(handler: Callable[..., None],
                    skill_id: str,
-                   on_start: Callable[[Message], None],
-                   on_end: Callable[[Message], None],
+                   on_start: Callable[..., None],
+                   on_end: Callable[..., None],
                    on_error: Callable[..., None]) \
-        -> Callable[[Message], None]:
+        -> Callable[..., None]:
     """
     Create the default skill handler wrapper.
     This wrapper handles things like metrics, reporting handler start/stop
@@ -90,8 +92,8 @@ def create_wrapper(handler: Callable[..., None],
 
 def create_basic_wrapper(handler: Callable[..., None],
                          on_error: Optional[Callable[[Exception],
-                                            None]] = None) -> \
-        Callable[[Message], None]:
+                         None]] = None) -> \
+        Callable[..., None]:
     """
     Create the default skill handler wrapper.
 
@@ -135,7 +137,7 @@ class EventContainer:
     def set_bus(self, bus):
         self.bus = bus
 
-    def add(self, name: str, handler: Callable[[Message], None],
+    def add(self, name: str, handler: Callable[..., None],
             once: bool = False):
         """
         Create event handler for executing intent or other event.
@@ -204,17 +206,8 @@ class EventContainer:
 class EventSchedulerInterface:
     """Interface for accessing the event scheduler over the message bus."""
 
-    def __init__(self, name=None, sched_id=None, bus=None, skill_id=None):
-        # NOTE: can not rename or move sched_id/name arguments to keep api
-        # compatibility
-        if name:
-            log_deprecation("name argument has been deprecated! "
-                            "use skill_id instead", "0.1.0")
-        if sched_id:
-            log_deprecation("sched_id argument has been deprecated! "
-                            "use skill_id instead", "0.1.0")
-
-        self.skill_id = skill_id or sched_id or name or self.__class__.__name__
+    def __init__(self, bus=None, skill_id=None):
+        self.skill_id = skill_id or self.__class__.__name__.lower()
         self.bus = bus
         self.events = EventContainer(bus)
         self.scheduled_repeats = []
@@ -228,15 +221,14 @@ class EventSchedulerInterface:
         self.bus = bus
         self.events.set_bus(bus)
 
-    def set_id(self, sched_id: str):
+    def set_id(self, skill_id: str):
         """
         Attach the skill_id of the parent skill
 
         Args:
-            sched_id (str): skill_id of the parent skill
+            skill_id (str): skill_id of the parent skill
         """
-        # NOTE: can not rename sched_id kwarg to keep api compatibility
-        self.skill_id = sched_id
+        self.skill_id = skill_id
 
     def _get_source_message(self):
         message = dig_for_message() or Message("")
@@ -252,7 +244,7 @@ class EventSchedulerInterface:
         # TODO: Is a null name valid or should it raise an exception?
         return self.skill_id + ':' + (name or '')
 
-    def _schedule_event(self, handler: Callable[[Optional[Message]], None],
+    def _schedule_event(self, handler: Callable[..., None],
                         when: Union[datetime, int, float],
                         data: Optional[dict],
                         name: Optional[str],
@@ -300,9 +292,9 @@ class EventSchedulerInterface:
         context = context or message.context
         context["skill_id"] = self.skill_id
         self.bus.emit(Message('mycroft.scheduler.schedule_event',
-                              data=event_data, context=context))
+                                                    data=event_data, context=context))
 
-    def schedule_event(self, handler: Callable[[Optional[Message]], None],
+    def schedule_event(self, handler: Callable[..., None],
                        when: Union[datetime, int, float],
                        data: Optional[dict] = None,
                        name: Optional[str] = None,
@@ -319,7 +311,7 @@ class EventSchedulerInterface:
         self._schedule_event(handler, when, data, name, context=context)
 
     def schedule_repeating_event(self,
-                                 handler: Callable[[Optional[Message]], None],
+                                 handler: Callable[..., None],
                                  when: Optional[Union[datetime, int, float]],
                                  interval: Union[float, int],
                                  data: Optional[dict] = None,
@@ -425,39 +417,3 @@ class EventSchedulerInterface:
         """
         self.cancel_all_repeating_events()
         self.events.clear()
-
-    @property
-    @deprecated("self.sched_id has been deprecated! use self.skill_id instead",
-                "0.1.0")
-    def sched_id(self):
-        """DEPRECATED: do not use, method only for api backwards compatibility
-        Logs a warning and returns self.skill_id
-        """
-        return self.skill_id
-
-    @sched_id.setter
-    @deprecated("self.sched_id has been deprecated! use self.skill_id instead",
-                "0.1.0")
-    def sched_id(self, skill_id):
-        """DEPRECATED: do not use, method only for api backwards compatibility
-        Logs a warning and sets self.skill_id
-        """
-        self.skill_id = skill_id
-
-    @property
-    @deprecated("self.name has been deprecated! use self.skill_id instead",
-                "0.1.0")
-    def name(self):
-        """DEPRECATED: do not use, method only for api backwards compatibility
-        Logs a warning and returns self.skill_id
-        """
-        return self.skill_id
-
-    @name.setter
-    @deprecated("self.name has been deprecated! use self.skill_id instead",
-                "0.1.0")
-    def name(self, skill_id):
-        """DEPRECATED: do not use, method only for api backwards compatibility
-        Logs a warning and sets self.skill_id
-        """
-        self.skill_id = skill_id
