@@ -1,8 +1,8 @@
 # Changelog
 
-## [0.1.0a13](https://github.com/builderjer/ovos_utils/tree/0.1.0a13) (2024-01-27)
+## [V0.1.0a13](https://github.com/builderjer/ovos_utils/tree/V0.1.0a13) (2024-01-27)
 
-[Full Changelog](https://github.com/builderjer/ovos_utils/compare/V0.0.37a5...0.1.0a13)
+[Full Changelog](https://github.com/builderjer/ovos_utils/compare/V0.0.37a5...V0.1.0a13)
 
 **Merged pull requests:**
 
