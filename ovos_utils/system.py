@@ -32,7 +32,7 @@ def is_running_from_module(module_name):
 
 # system utils
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
-def ntp_sync(bus=None):
+def ntp_sync():
     """
     Force the system clock to synchronize with internet time servers
     """
@@ -41,7 +41,7 @@ def ntp_sync(bus=None):
     subprocess.call('service ntp start', shell=True)
 
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
-def system_shutdown(sudo=True, bus=None):
+def system_shutdown(sudo=True):
     """
     Turn the system completely off (with no option to inhibit it)
     @param sudo: use sudo when calling systemctl
@@ -53,7 +53,7 @@ def system_shutdown(sudo=True, bus=None):
     subprocess.call(cmd, shell=True)
 
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
-def system_reboot(sudo=True, bus=None):
+def system_reboot(sudo=True):
     """
     Shut down and restart the system
     @param sudo: use sudo when calling systemctl
@@ -65,7 +65,7 @@ def system_reboot(sudo=True, bus=None):
     subprocess.call(cmd, shell=True)
 
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
-def ssh_enable(sudo=True, user=False, bus=None):
+def ssh_enable(sudo=True, user=False):
     """
     Permanently allow SSH access
     @param sudo: use sudo when calling systemctl
@@ -74,7 +74,7 @@ def ssh_enable(sudo=True, user=False, bus=None):
     enable_service("ssh.service", sudo=sudo, user=user)
 
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
-def ssh_disable(sudo=True, user=False, bus=None):
+def ssh_disable(sudo=True, user=False):
     """
     Permanently block SSH access from the outside
     @param sudo: use sudo when calling systemctl
@@ -83,7 +83,7 @@ def ssh_disable(sudo=True, user=False, bus=None):
     disable_service("ssh.service", sudo=sudo, user=user)
 
 @deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
-def restart_mycroft_service(sudo=True, user=False, bus=None):
+def restart_mycroft_service(sudo=True, user=False):
     """
     Restarts the `mycroft.service` systemd service
     @param sudo: use sudo when calling systemctl
