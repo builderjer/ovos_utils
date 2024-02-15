@@ -1,8 +1,33 @@
 # Changelog
 
-## [V0.1.0a13](https://github.com/builderjer/ovos_utils/tree/V0.1.0a13) (2024-01-27)
+## [0.1.0a13](https://github.com/OpenVoiceOS/ovos-utils/tree/0.1.0a13) (2024-01-30)
 
-[Full Changelog](https://github.com/builderjer/ovos_utils/compare/V0.0.37a5...V0.1.0a13)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utils/compare/V0.1.0a12...0.1.0a13)
+
+**Merged pull requests:**
+
+- Update rapidfuzz requirement from ~=2.0 to ~=3.6 in /requirements [\#224](https://github.com/OpenVoiceOS/ovos-utils/pull/224) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update pexpect requirement from ~=4.6 to ~=4.9 in /requirements [\#223](https://github.com/OpenVoiceOS/ovos-utils/pull/223) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [V0.1.0a12](https://github.com/OpenVoiceOS/ovos-utils/tree/V0.1.0a12) (2024-01-25)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utils/compare/V0.1.0a11...V0.1.0a12)
+
+**Fixed bugs:**
+
+- fix/ocp\_playlist [\#221](https://github.com/OpenVoiceOS/ovos-utils/pull/221) ([NeonJarbas](https://github.com/NeonJarbas))
+
+## [V0.1.0a11](https://github.com/OpenVoiceOS/ovos-utils/tree/V0.1.0a11) (2024-01-25)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utils/compare/V0.1.0a10...V0.1.0a11)
+
+**Fixed bugs:**
+
+- fix/restore deprecated OCP enums compat [\#220](https://github.com/OpenVoiceOS/ovos-utils/pull/220) ([NeonJarbas](https://github.com/NeonJarbas))
+
+## [V0.1.0a10](https://github.com/OpenVoiceOS/ovos-utils/tree/V0.1.0a10) (2024-01-15)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-utils/compare/V0.1.0a9...V0.1.0a10)
 
 **Merged pull requests:**
 
