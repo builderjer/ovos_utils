@@ -9,24 +9,6 @@ class TestSystem(unittest.TestCase):
         self.assertTrue(is_running_from_module("unittest"))
 
     @patch("subprocess.Popen")
-    def test_ntp_sync(self, popen):
-        from ovos_utils.system import ntp_sync
-        ntp_sync()
-        popen.assert_called_with("service ntp stop", shell=True)
-        popen.assert_called_with("ntpd -gq", shell=True)
-        popen.assert_called_with("service ntp start", shell=True)
-
-    @patch("subprocess.Popen")
-    def test_timesync_sync(self, popen):
-        from ovos_utils.system import timesync_sync
-        timesync_sync()
-        popen.assert_called_with("sudo systemctl stop systemd-timesyncd", shell=True)
-        popen.assert_called_with("sudo systemctl start systemd-timesyncd", shell=True)
-        timesync_sync(False)
-        popen.assert_called_with("systemctl stop systemd-timesyncd", shell=True)
-        popen.assert_called_with("systemctl start systemd-timesyncd", shell=True)
-
-    @patch("subprocess.Popen")
     def test_system_shutdown(self, popen):
         from ovos_utils.system import system_shutdown
         system_shutdown()

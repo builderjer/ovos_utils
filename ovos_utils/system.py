@@ -31,7 +31,7 @@ def is_running_from_module(module_name):
     return False
 
 # system utils
-@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
+@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.2.0")
 def ntp_sync():
     """
     Force the system clock to synchronize with internet time servers
@@ -40,7 +40,7 @@ def ntp_sync():
     subprocess.call('ntpd -gq', shell=True)
     subprocess.call('service ntp start', shell=True)
 
-@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
+@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.2.0")
 def system_shutdown(sudo=True):
     """
     Turn the system completely off (with no option to inhibit it)
@@ -52,7 +52,7 @@ def system_shutdown(sudo=True):
     LOG.debug(cmd)
     subprocess.call(cmd, shell=True)
 
-@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
+@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.2.0")
 def system_reboot(sudo=True):
     """
     Shut down and restart the system
@@ -64,7 +64,7 @@ def system_reboot(sudo=True):
     LOG.debug(cmd)
     subprocess.call(cmd, shell=True)
 
-@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
+@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.2.0")
 def ssh_enable(sudo=True, user=False):
     """
     Permanently allow SSH access
@@ -73,7 +73,7 @@ def ssh_enable(sudo=True, user=False):
     """
     enable_service("ssh.service", sudo=sudo, user=user)
 
-@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
+@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.2.0")
 def ssh_disable(sudo=True, user=False):
     """
     Permanently block SSH access from the outside
@@ -82,7 +82,7 @@ def ssh_disable(sudo=True, user=False):
     """
     disable_service("ssh.service", sudo=sudo, user=user)
 
-@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.1.0")
+@deprecated("DEPRECATED: use ovos-PHAL-plugin-system", "0.2.0")
 def restart_mycroft_service(sudo=True, user=False):
     """
     Restarts the `mycroft.service` systemd service
