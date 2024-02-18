@@ -1,85 +1,44 @@
 # Changelog
 
-## [0.1.0a13](https://github.com/OpenVoiceOS/ovos-utils/tree/0.1.0a13) (2024-01-30)
+## [V0.1.0a15](https://github.com/builderjer/ovos_utils/tree/V0.1.0a15) (2024-02-16)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utils/compare/V0.1.0a12...0.1.0a13)
+[Full Changelog](https://github.com/builderjer/ovos_utils/compare/V0.1.0a14...V0.1.0a15)
 
-**Merged pull requests:**
+## [V0.1.0a14](https://github.com/builderjer/ovos_utils/tree/V0.1.0a14) (2024-02-04)
 
-- Update rapidfuzz requirement from ~=2.0 to ~=3.6 in /requirements [\#224](https://github.com/OpenVoiceOS/ovos-utils/pull/224) ([dependabot[bot]](https://github.com/apps/dependabot))
-- Update pexpect requirement from ~=4.6 to ~=4.9 in /requirements [\#223](https://github.com/OpenVoiceOS/ovos-utils/pull/223) ([dependabot[bot]](https://github.com/apps/dependabot))
+[Full Changelog](https://github.com/builderjer/ovos_utils/compare/V0.1.0a13...V0.1.0a14)
 
-## [V0.1.0a12](https://github.com/OpenVoiceOS/ovos-utils/tree/V0.1.0a12) (2024-01-25)
+## [V0.1.0a13](https://github.com/builderjer/ovos_utils/tree/V0.1.0a13) (2024-01-27)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utils/compare/V0.1.0a11...V0.1.0a12)
+[Full Changelog](https://github.com/builderjer/ovos_utils/compare/V0.0.37a5...V0.1.0a13)
 
-**Fixed bugs:**
+## [V0.0.37a5](https://github.com/builderjer/ovos_utils/tree/V0.0.37a5) (2023-11-11)
 
-- fix/ocp\_playlist [\#221](https://github.com/OpenVoiceOS/ovos-utils/pull/221) ([NeonJarbas](https://github.com/NeonJarbas))
+[Full Changelog](https://github.com/builderjer/ovos_utils/compare/V0.0.37a4...V0.0.37a5)
 
-## [V0.1.0a11](https://github.com/OpenVoiceOS/ovos-utils/tree/V0.1.0a11) (2024-01-25)
+## [V0.0.37a4](https://github.com/builderjer/ovos_utils/tree/V0.0.37a4) (2023-10-31)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utils/compare/V0.1.0a10...V0.1.0a11)
+[Full Changelog](https://github.com/builderjer/ovos_utils/compare/V0.0.37a3...V0.0.37a4)
 
-**Fixed bugs:**
+## [V0.0.37a3](https://github.com/builderjer/ovos_utils/tree/V0.0.37a3) (2023-10-30)
 
-- fix/restore deprecated OCP enums compat [\#220](https://github.com/OpenVoiceOS/ovos-utils/pull/220) ([NeonJarbas](https://github.com/NeonJarbas))
+[Full Changelog](https://github.com/builderjer/ovos_utils/compare/V0.0.37a2...V0.0.37a3)
 
-## [V0.1.0a10](https://github.com/OpenVoiceOS/ovos-utils/tree/V0.1.0a10) (2024-01-15)
+## [V0.0.37a2](https://github.com/builderjer/ovos_utils/tree/V0.0.37a2) (2023-10-30)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utils/compare/V0.1.0a9...V0.1.0a10)
+[Full Changelog](https://github.com/builderjer/ovos_utils/compare/V0.0.37a1...V0.0.37a2)
 
-**Merged pull requests:**
+## [V0.0.37a1](https://github.com/builderjer/ovos_utils/tree/V0.0.37a1) (2023-10-30)
 
-- clarify datetime arg [\#219](https://github.com/OpenVoiceOS/ovos-utils/pull/219) ([emphasize](https://github.com/emphasize))
+[Full Changelog](https://github.com/builderjer/ovos_utils/compare/V0.0.25a12...V0.0.37a1)
 
-## [V0.1.0a9](https://github.com/OpenVoiceOS/ovos-utils/tree/V0.1.0a9) (2024-01-12)
+## [V0.0.25a12](https://github.com/builderjer/ovos_utils/tree/V0.0.25a12) (2022-10-16)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utils/compare/V0.1.0a8...V0.1.0a9)
+[Full Changelog](https://github.com/builderjer/ovos_utils/compare/0.0.12...V0.0.25a12)
 
-**Implemented enhancements:**
+## [0.0.12](https://github.com/builderjer/ovos_utils/tree/0.0.12) (2021-11-04)
 
-- OCP serialization [\#218](https://github.com/OpenVoiceOS/ovos-utils/pull/218) ([NeonJarbas](https://github.com/NeonJarbas))
-
-## [V0.1.0a8](https://github.com/OpenVoiceOS/ovos-utils/tree/V0.1.0a8) (2024-01-08)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utils/compare/V0.1.0a7...V0.1.0a8)
-
-**Implemented enhancements:**
-
-- refactor/ocp\_utils [\#216](https://github.com/OpenVoiceOS/ovos-utils/pull/216) ([NeonJarbas](https://github.com/NeonJarbas))
-
-## [V0.1.0a7](https://github.com/OpenVoiceOS/ovos-utils/tree/V0.1.0a7) (2024-01-06)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utils/compare/V0.1.0a6...V0.1.0a7)
-
-**Merged pull requests:**
-
-- refactor/ocp\_utils [\#215](https://github.com/OpenVoiceOS/ovos-utils/pull/215) ([NeonJarbas](https://github.com/NeonJarbas))
-
-## [V0.1.0a6](https://github.com/OpenVoiceOS/ovos-utils/tree/V0.1.0a6) (2023-12-30)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utils/compare/V0.1.0a5...V0.1.0a6)
-
-**Implemented enhancements:**
-
-- Feat/ovos logs script [\#203](https://github.com/OpenVoiceOS/ovos-utils/pull/203) ([emphasize](https://github.com/emphasize))
-
-## [V0.1.0a5](https://github.com/OpenVoiceOS/ovos-utils/tree/V0.1.0a5) (2023-12-30)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utils/compare/V0.1.0a4...V0.1.0a5)
-
-**Merged pull requests:**
-
-- fix/log\_spam [\#213](https://github.com/OpenVoiceOS/ovos-utils/pull/213) ([JarbasAl](https://github.com/JarbasAl))
-
-## [V0.1.0a4](https://github.com/OpenVoiceOS/ovos-utils/tree/V0.1.0a4) (2023-12-29)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utils/compare/V0.1.0a3...V0.1.0a4)
-
-## [V0.1.0a3](https://github.com/OpenVoiceOS/ovos-utils/tree/V0.1.0a3) (2023-12-29)
-
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-utils/compare/V0.0.38...V0.1.0a3)
+[Full Changelog](https://github.com/builderjer/ovos_utils/compare/25fe462e3c19a58f32dc1fd940bf7c96fc18e6de...0.0.12)
 
 
 
